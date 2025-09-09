@@ -5,7 +5,7 @@ def send_email():
     sender = "hello@demomailtrap.co"
     receiver = "siddharthareddyiitp@gmail.com"
     username = "api"
-    password = "<YOUR_API_TOKEN>"   
+    password = "d32155f441fcb83279f36c8d660e7415"
 
     msg = MIMEText("Hello Siddhartha, this is a test email via Mailtrap.")
     msg["Subject"] = "CN Lab 2 - SMTP Test"
@@ -23,3 +23,4 @@ def send_email():
         print("Error:", e)
 
 send_email()
+
