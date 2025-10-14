@@ -17,22 +17,22 @@ def sender(data_frames, loss_prob, timeout_duration):
             print(f"Sending Frame {frame_index} (seq: {seq_num})")
             
             received_by_receiver = simulate_network(frame_to_send, loss_prob)
-            
-            start_time = time.time()
             ack = None
-
             if received_by_receiver:
                 ack = receiver(received_by_receiver, seq_num)
                 ack = simulate_network(ack, loss_prob)
 
+            start_time = time.time()
+            ack_is_correct = False
             while time.time() - start_time < timeout_duration:
                 if ack and ack['ack_num'] == seq_num:
-                    print(f"ACK {seq_num} received for Frame {frame_index}")
-                    frame_index += 1
-                    seq_num = 1 - seq_num 
+                    ack_is_correct = True
                     break
             
-            if ack and ack['ack_num'] == seq_num:
+            if ack_is_correct:
+                print(f"ACK {seq_num} received for Frame {frame_index}")
+                frame_index += 1
+                seq_num = 1 - seq_num
                 break
             else:
                 print(f"Timeout! Frame {frame_index} lost, retransmitting...")
